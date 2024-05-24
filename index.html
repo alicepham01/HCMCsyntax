@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>HCMC Space Syntax Analysis</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/spacesyntaxgraph_clver_segment_mapchoice800_1.js"></script>
+        <script src="data/spacesyntaxgraph_clver_segment_map_choice_500_2.js"></script>
+        <script src="data/spacesyntaxgraph_clver_segment_mapchoice2500_3.js"></script>
+        <script src="data/spacesyntaxgraph_clver_segment_map_500_4.js"></script>
+        <script src="data/spacesyntaxgraph_clver_segment_map_2500_5.js"></script>
+        <script src="data/spacesyntaxgraph_clver_segment_map800_6.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        document.querySelector(".leaflet-popup-pane").addEventListener("load", function(event) {
+          var tagName = event.target.tagName,
+            popup = map._popup;
+          // Also check if flag is already set.
+          if (tagName === "IMG" && popup && !popup._updated) {
+            popup._updated = true; // Set flag to prevent looping.
+            popup.update();
+          }
+        }, true);
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        map.createPane('pane_CartoDark_0');
+        map.getPane('pane_CartoDark_0').style.zIndex = 400;
+        var layer_CartoDark_0 = L.tileLayer('https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+            pane: 'pane_CartoDark_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 22
+        });
+        layer_CartoDark_0;
+        map.addLayer(layer_CartoDark_0);
+        function pop_spacesyntaxgraph_clver_segment_mapchoice800_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">T120_Choice_R800_metric</th>\
+                        <td>' + (feature.properties['T120_Choice_R800_metric'] !== null ? autolinker.link(feature.properties['T120_Choice_R800_metric'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_spacesyntaxgraph_clver_segment_mapchoice800_1_0(feature) {
+            if (feature.properties['T120_Choice_R800_metric'] >= 0.000000 && feature.properties['T120_Choice_R800_metric'] <= 1535.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice800_1',
+                opacity: 1,
+                color: 'rgba(0,0,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R800_metric'] >= 1535.000000 && feature.properties['T120_Choice_R800_metric'] <= 4303.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice800_1',
+                opacity: 1,
+                color: 'rgba(57,57,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R800_metric'] >= 4303.000000 && feature.properties['T120_Choice_R800_metric'] <= 7882.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice800_1',
+                opacity: 1,
+                color: 'rgba(113,113,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R800_metric'] >= 7882.000000 && feature.properties['T120_Choice_R800_metric'] <= 12301.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice800_1',
+                opacity: 1,
+                color: 'rgba(170,170,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R800_metric'] >= 12301.000000 && feature.properties['T120_Choice_R800_metric'] <= 17601.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice800_1',
+                opacity: 1,
+                color: 'rgba(227,227,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R800_metric'] >= 17601.000000 && feature.properties['T120_Choice_R800_metric'] <= 24073.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice800_1',
+                opacity: 1,
+                color: 'rgba(255,227,227,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R800_metric'] >= 24073.000000 && feature.properties['T120_Choice_R800_metric'] <= 31903.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice800_1',
+                opacity: 1,
+                color: 'rgba(255,170,170,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R800_metric'] >= 31903.000000 && feature.properties['T120_Choice_R800_metric'] <= 41647.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice800_1',
+                opacity: 1,
+                color: 'rgba(255,113,113,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R800_metric'] >= 41647.000000 && feature.properties['T120_Choice_R800_metric'] <= 55397.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice800_1',
+                opacity: 1,
+                color: 'rgba(255,57,57,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R800_metric'] >= 55397.000000 && feature.properties['T120_Choice_R800_metric'] <= 78620.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice800_1',
+                opacity: 1,
+                color: 'rgba(255,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_spacesyntaxgraph_clver_segment_mapchoice800_1');
+        map.getPane('pane_spacesyntaxgraph_clver_segment_mapchoice800_1').style.zIndex = 401;
+        map.getPane('pane_spacesyntaxgraph_clver_segment_mapchoice800_1').style['mix-blend-mode'] = 'normal';
+        var layer_spacesyntaxgraph_clver_segment_mapchoice800_1 = new L.geoJson(json_spacesyntaxgraph_clver_segment_mapchoice800_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_spacesyntaxgraph_clver_segment_mapchoice800_1',
+            layerName: 'layer_spacesyntaxgraph_clver_segment_mapchoice800_1',
+            pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice800_1',
+            onEachFeature: pop_spacesyntaxgraph_clver_segment_mapchoice800_1,
+            style: style_spacesyntaxgraph_clver_segment_mapchoice800_1_0,
+        });
+        bounds_group.addLayer(layer_spacesyntaxgraph_clver_segment_mapchoice800_1);
+        map.addLayer(layer_spacesyntaxgraph_clver_segment_mapchoice800_1);
+        function pop_spacesyntaxgraph_clver_segment_map_choice_500_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">T120_Choice_R500_metric</th>\
+                        <td>' + (feature.properties['T120_Choice_R500_metric'] !== null ? autolinker.link(feature.properties['T120_Choice_R500_metric'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_spacesyntaxgraph_clver_segment_map_choice_500_2_0(feature) {
+            if (feature.properties['T120_Choice_R500_metric'] >= 0.000000 && feature.properties['T120_Choice_R500_metric'] <= 424.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_choice_500_2',
+                opacity: 1,
+                color: 'rgba(0,0,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R500_metric'] >= 424.000000 && feature.properties['T120_Choice_R500_metric'] <= 1158.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_choice_500_2',
+                opacity: 1,
+                color: 'rgba(57,57,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R500_metric'] >= 1158.000000 && feature.properties['T120_Choice_R500_metric'] <= 2075.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_choice_500_2',
+                opacity: 1,
+                color: 'rgba(113,113,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R500_metric'] >= 2075.000000 && feature.properties['T120_Choice_R500_metric'] <= 3159.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_choice_500_2',
+                opacity: 1,
+                color: 'rgba(170,170,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R500_metric'] >= 3159.000000 && feature.properties['T120_Choice_R500_metric'] <= 4458.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_choice_500_2',
+                opacity: 1,
+                color: 'rgba(227,227,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R500_metric'] >= 4458.000000 && feature.properties['T120_Choice_R500_metric'] <= 6108.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_choice_500_2',
+                opacity: 1,
+                color: 'rgba(255,227,227,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R500_metric'] >= 6108.000000 && feature.properties['T120_Choice_R500_metric'] <= 8093.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_choice_500_2',
+                opacity: 1,
+                color: 'rgba(255,170,170,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R500_metric'] >= 8093.000000 && feature.properties['T120_Choice_R500_metric'] <= 10659.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_choice_500_2',
+                opacity: 1,
+                color: 'rgba(255,113,113,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R500_metric'] >= 10659.000000 && feature.properties['T120_Choice_R500_metric'] <= 15151.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_choice_500_2',
+                opacity: 1,
+                color: 'rgba(255,57,57,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R500_metric'] >= 15151.000000 && feature.properties['T120_Choice_R500_metric'] <= 22997.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_choice_500_2',
+                opacity: 1,
+                color: 'rgba(255,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_spacesyntaxgraph_clver_segment_map_choice_500_2');
+        map.getPane('pane_spacesyntaxgraph_clver_segment_map_choice_500_2').style.zIndex = 402;
+        map.getPane('pane_spacesyntaxgraph_clver_segment_map_choice_500_2').style['mix-blend-mode'] = 'normal';
+        var layer_spacesyntaxgraph_clver_segment_map_choice_500_2 = new L.geoJson(json_spacesyntaxgraph_clver_segment_map_choice_500_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_spacesyntaxgraph_clver_segment_map_choice_500_2',
+            layerName: 'layer_spacesyntaxgraph_clver_segment_map_choice_500_2',
+            pane: 'pane_spacesyntaxgraph_clver_segment_map_choice_500_2',
+            onEachFeature: pop_spacesyntaxgraph_clver_segment_map_choice_500_2,
+            style: style_spacesyntaxgraph_clver_segment_map_choice_500_2_0,
+        });
+        bounds_group.addLayer(layer_spacesyntaxgraph_clver_segment_map_choice_500_2);
+        map.addLayer(layer_spacesyntaxgraph_clver_segment_map_choice_500_2);
+        function pop_spacesyntaxgraph_clver_segment_mapchoice2500_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">T120_Choice_R2500_metric</th>\
+                        <td>' + (feature.properties['T120_Choice_R2500_metric'] !== null ? autolinker.link(feature.properties['T120_Choice_R2500_metric'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_spacesyntaxgraph_clver_segment_mapchoice2500_3_0(feature) {
+            if (feature.properties['T120_Choice_R2500_metric'] >= 0.000000 && feature.properties['T120_Choice_R2500_metric'] <= 40760.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice2500_3',
+                opacity: 1,
+                color: 'rgba(0,0,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R2500_metric'] >= 40760.000000 && feature.properties['T120_Choice_R2500_metric'] <= 127114.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice2500_3',
+                opacity: 1,
+                color: 'rgba(57,57,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R2500_metric'] >= 127114.000000 && feature.properties['T120_Choice_R2500_metric'] <= 253418.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice2500_3',
+                opacity: 1,
+                color: 'rgba(113,113,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R2500_metric'] >= 253418.000000 && feature.properties['T120_Choice_R2500_metric'] <= 421481.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice2500_3',
+                opacity: 1,
+                color: 'rgba(170,170,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R2500_metric'] >= 421481.000000 && feature.properties['T120_Choice_R2500_metric'] <= 610343.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice2500_3',
+                opacity: 1,
+                color: 'rgba(227,227,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R2500_metric'] >= 610343.000000 && feature.properties['T120_Choice_R2500_metric'] <= 824775.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice2500_3',
+                opacity: 1,
+                color: 'rgba(255,227,227,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R2500_metric'] >= 824775.000000 && feature.properties['T120_Choice_R2500_metric'] <= 1083435.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice2500_3',
+                opacity: 1,
+                color: 'rgba(255,170,170,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R2500_metric'] >= 1083435.000000 && feature.properties['T120_Choice_R2500_metric'] <= 1411932.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice2500_3',
+                opacity: 1,
+                color: 'rgba(255,113,113,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R2500_metric'] >= 1411932.000000 && feature.properties['T120_Choice_R2500_metric'] <= 1817344.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice2500_3',
+                opacity: 1,
+                color: 'rgba(255,57,57,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Choice_R2500_metric'] >= 1817344.000000 && feature.properties['T120_Choice_R2500_metric'] <= 2388764.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice2500_3',
+                opacity: 1,
+                color: 'rgba(255,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_spacesyntaxgraph_clver_segment_mapchoice2500_3');
+        map.getPane('pane_spacesyntaxgraph_clver_segment_mapchoice2500_3').style.zIndex = 403;
+        map.getPane('pane_spacesyntaxgraph_clver_segment_mapchoice2500_3').style['mix-blend-mode'] = 'normal';
+        var layer_spacesyntaxgraph_clver_segment_mapchoice2500_3 = new L.geoJson(json_spacesyntaxgraph_clver_segment_mapchoice2500_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_spacesyntaxgraph_clver_segment_mapchoice2500_3',
+            layerName: 'layer_spacesyntaxgraph_clver_segment_mapchoice2500_3',
+            pane: 'pane_spacesyntaxgraph_clver_segment_mapchoice2500_3',
+            onEachFeature: pop_spacesyntaxgraph_clver_segment_mapchoice2500_3,
+            style: style_spacesyntaxgraph_clver_segment_mapchoice2500_3_0,
+        });
+        bounds_group.addLayer(layer_spacesyntaxgraph_clver_segment_mapchoice2500_3);
+        map.addLayer(layer_spacesyntaxgraph_clver_segment_mapchoice2500_3);
+        function pop_spacesyntaxgraph_clver_segment_map_500_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">T120_Integration_R500_metric</th>\
+                        <td>' + (feature.properties['T120_Integration_R500_metric'] !== null ? autolinker.link(feature.properties['T120_Integration_R500_metric'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_spacesyntaxgraph_clver_segment_map_500_4_0(feature) {
+            if (feature.properties['T120_Integration_R500_metric'] >= -1.000000 && feature.properties['T120_Integration_R500_metric'] <= 29.802816 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_500_4',
+                opacity: 1,
+                color: 'rgba(0,0,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R500_metric'] >= 29.802816 && feature.properties['T120_Integration_R500_metric'] <= 48.343033 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_500_4',
+                opacity: 1,
+                color: 'rgba(57,57,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R500_metric'] >= 48.343033 && feature.properties['T120_Integration_R500_metric'] <= 65.889191 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_500_4',
+                opacity: 1,
+                color: 'rgba(113,113,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R500_metric'] >= 65.889191 && feature.properties['T120_Integration_R500_metric'] <= 83.851250 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_500_4',
+                opacity: 1,
+                color: 'rgba(170,170,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R500_metric'] >= 83.851250 && feature.properties['T120_Integration_R500_metric'] <= 102.713710 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_500_4',
+                opacity: 1,
+                color: 'rgba(227,227,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R500_metric'] >= 102.713710 && feature.properties['T120_Integration_R500_metric'] <= 123.320730 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_500_4',
+                opacity: 1,
+                color: 'rgba(255,227,227,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R500_metric'] >= 123.320730 && feature.properties['T120_Integration_R500_metric'] <= 146.767300 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_500_4',
+                opacity: 1,
+                color: 'rgba(255,170,170,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R500_metric'] >= 146.767300 && feature.properties['T120_Integration_R500_metric'] <= 175.324190 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_500_4',
+                opacity: 1,
+                color: 'rgba(255,113,113,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R500_metric'] >= 175.324190 && feature.properties['T120_Integration_R500_metric'] <= 221.414600 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_500_4',
+                opacity: 1,
+                color: 'rgba(255,57,57,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R500_metric'] >= 221.414600 && feature.properties['T120_Integration_R500_metric'] <= 375.000000 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_500_4',
+                opacity: 1,
+                color: 'rgba(255,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_spacesyntaxgraph_clver_segment_map_500_4');
+        map.getPane('pane_spacesyntaxgraph_clver_segment_map_500_4').style.zIndex = 404;
+        map.getPane('pane_spacesyntaxgraph_clver_segment_map_500_4').style['mix-blend-mode'] = 'normal';
+        var layer_spacesyntaxgraph_clver_segment_map_500_4 = new L.geoJson(json_spacesyntaxgraph_clver_segment_map_500_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_spacesyntaxgraph_clver_segment_map_500_4',
+            layerName: 'layer_spacesyntaxgraph_clver_segment_map_500_4',
+            pane: 'pane_spacesyntaxgraph_clver_segment_map_500_4',
+            onEachFeature: pop_spacesyntaxgraph_clver_segment_map_500_4,
+            style: style_spacesyntaxgraph_clver_segment_map_500_4_0,
+        });
+        bounds_group.addLayer(layer_spacesyntaxgraph_clver_segment_map_500_4);
+        map.addLayer(layer_spacesyntaxgraph_clver_segment_map_500_4);
+        function pop_spacesyntaxgraph_clver_segment_map_2500_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">T120_Integration_R2500_metric</th>\
+                        <td>' + (feature.properties['T120_Integration_R2500_metric'] !== null ? autolinker.link(feature.properties['T120_Integration_R2500_metric'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_spacesyntaxgraph_clver_segment_map_2500_5_0(feature) {
+            if (feature.properties['T120_Integration_R2500_metric'] >= 4.000000 && feature.properties['T120_Integration_R2500_metric'] <= 300.737270 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_2500_5',
+                opacity: 1,
+                color: 'rgba(0,0,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R2500_metric'] >= 300.737270 && feature.properties['T120_Integration_R2500_metric'] <= 497.073760 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_2500_5',
+                opacity: 1,
+                color: 'rgba(57,57,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R2500_metric'] >= 497.073760 && feature.properties['T120_Integration_R2500_metric'] <= 662.180730 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_2500_5',
+                opacity: 1,
+                color: 'rgba(113,113,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R2500_metric'] >= 662.180730 && feature.properties['T120_Integration_R2500_metric'] <= 811.446590 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_2500_5',
+                opacity: 1,
+                color: 'rgba(170,170,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R2500_metric'] >= 811.446590 && feature.properties['T120_Integration_R2500_metric'] <= 954.193660 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_2500_5',
+                opacity: 1,
+                color: 'rgba(227,227,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R2500_metric'] >= 954.193660 && feature.properties['T120_Integration_R2500_metric'] <= 1106.832500 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_2500_5',
+                opacity: 1,
+                color: 'rgba(255,227,227,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R2500_metric'] >= 1106.832500 && feature.properties['T120_Integration_R2500_metric'] <= 1276.945700 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_2500_5',
+                opacity: 1,
+                color: 'rgba(255,170,170,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R2500_metric'] >= 1276.945700 && feature.properties['T120_Integration_R2500_metric'] <= 1472.277100 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_2500_5',
+                opacity: 1,
+                color: 'rgba(255,113,113,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R2500_metric'] >= 1472.277100 && feature.properties['T120_Integration_R2500_metric'] <= 1724.002400 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_2500_5',
+                opacity: 1,
+                color: 'rgba(255,57,57,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R2500_metric'] >= 1724.002400 && feature.properties['T120_Integration_R2500_metric'] <= 2188.652100 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map_2500_5',
+                opacity: 1,
+                color: 'rgba(255,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_spacesyntaxgraph_clver_segment_map_2500_5');
+        map.getPane('pane_spacesyntaxgraph_clver_segment_map_2500_5').style.zIndex = 405;
+        map.getPane('pane_spacesyntaxgraph_clver_segment_map_2500_5').style['mix-blend-mode'] = 'normal';
+        var layer_spacesyntaxgraph_clver_segment_map_2500_5 = new L.geoJson(json_spacesyntaxgraph_clver_segment_map_2500_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_spacesyntaxgraph_clver_segment_map_2500_5',
+            layerName: 'layer_spacesyntaxgraph_clver_segment_map_2500_5',
+            pane: 'pane_spacesyntaxgraph_clver_segment_map_2500_5',
+            onEachFeature: pop_spacesyntaxgraph_clver_segment_map_2500_5,
+            style: style_spacesyntaxgraph_clver_segment_map_2500_5_0,
+        });
+        bounds_group.addLayer(layer_spacesyntaxgraph_clver_segment_map_2500_5);
+        map.addLayer(layer_spacesyntaxgraph_clver_segment_map_2500_5);
+        function pop_spacesyntaxgraph_clver_segment_map800_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">T120_Integration_R800_metric</th>\
+                        <td>' + (feature.properties['T120_Integration_R800_metric'] !== null ? autolinker.link(feature.properties['T120_Integration_R800_metric'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_spacesyntaxgraph_clver_segment_map800_6_0(feature) {
+            if (feature.properties['T120_Integration_R800_metric'] >= -1.000000 && feature.properties['T120_Integration_R800_metric'] <= 59.034702 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map800_6',
+                opacity: 1,
+                color: 'rgba(0,0,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R800_metric'] >= 59.034702 && feature.properties['T120_Integration_R800_metric'] <= 97.976044 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map800_6',
+                opacity: 1,
+                color: 'rgba(57,57,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R800_metric'] >= 97.976044 && feature.properties['T120_Integration_R800_metric'] <= 134.835020 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map800_6',
+                opacity: 1,
+                color: 'rgba(113,113,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R800_metric'] >= 134.835020 && feature.properties['T120_Integration_R800_metric'] <= 171.776340 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map800_6',
+                opacity: 1,
+                color: 'rgba(170,170,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R800_metric'] >= 171.776340 && feature.properties['T120_Integration_R800_metric'] <= 209.301280 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map800_6',
+                opacity: 1,
+                color: 'rgba(227,227,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R800_metric'] >= 209.301280 && feature.properties['T120_Integration_R800_metric'] <= 249.002200 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map800_6',
+                opacity: 1,
+                color: 'rgba(255,227,227,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R800_metric'] >= 249.002200 && feature.properties['T120_Integration_R800_metric'] <= 293.807220 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map800_6',
+                opacity: 1,
+                color: 'rgba(255,170,170,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R800_metric'] >= 293.807220 && feature.properties['T120_Integration_R800_metric'] <= 349.218720 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map800_6',
+                opacity: 1,
+                color: 'rgba(255,113,113,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R800_metric'] >= 349.218720 && feature.properties['T120_Integration_R800_metric'] <= 429.185970 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map800_6',
+                opacity: 1,
+                color: 'rgba(255,57,57,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+            if (feature.properties['T120_Integration_R800_metric'] >= 429.185970 && feature.properties['T120_Integration_R800_metric'] <= 597.882930 ) {
+                return {
+                pane: 'pane_spacesyntaxgraph_clver_segment_map800_6',
+                opacity: 1,
+                color: 'rgba(255,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_spacesyntaxgraph_clver_segment_map800_6');
+        map.getPane('pane_spacesyntaxgraph_clver_segment_map800_6').style.zIndex = 406;
+        map.getPane('pane_spacesyntaxgraph_clver_segment_map800_6').style['mix-blend-mode'] = 'normal';
+        var layer_spacesyntaxgraph_clver_segment_map800_6 = new L.geoJson(json_spacesyntaxgraph_clver_segment_map800_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_spacesyntaxgraph_clver_segment_map800_6',
+            layerName: 'layer_spacesyntaxgraph_clver_segment_map800_6',
+            pane: 'pane_spacesyntaxgraph_clver_segment_map800_6',
+            onEachFeature: pop_spacesyntaxgraph_clver_segment_map800_6,
+            style: style_spacesyntaxgraph_clver_segment_map800_6_0,
+        });
+        bounds_group.addLayer(layer_spacesyntaxgraph_clver_segment_map800_6);
+        map.addLayer(layer_spacesyntaxgraph_clver_segment_map800_6);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>HCMC Space Syntax Analysis</h2>';
+            };
+            title.addTo(map);
+        var baseMaps = {};
+        var overlaysTree = [
+        {label: '<b>Intergration</b>', selectAllCheckbox: true, children: [
+            {label: 'spacesyntax — graph_clver_segment_map 800<br /><table><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map800_6_100005903470.png" /></td><td>-1.0000 - 59.0347</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map800_6_5903479797601.png" /></td><td>59.0347 - 97.9760</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map800_6_97976013483502.png" /></td><td>97.9760 - 134.8350</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map800_6_134835017177633.png" /></td><td>134.8350 - 171.7763</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map800_6_171776320930134.png" /></td><td>171.7763 - 209.3013</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map800_6_209301324900225.png" /></td><td>209.3013 - 249.0022</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map800_6_249002229380726.png" /></td><td>249.0022 - 293.8072</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map800_6_293807234921877.png" /></td><td>293.8072 - 349.2187</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map800_6_349218742918608.png" /></td><td>349.2187 - 429.1860</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map800_6_429186059788299.png" /></td><td>429.1860 - 597.8829</td></tr></table>', layer: layer_spacesyntaxgraph_clver_segment_map800_6},
+            {label: 'spacesyntax — graph_clver_segment_map_2500<br /><table><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_2500_5_4000030073730.png" /></td><td>4.0000 - 300.7373</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_2500_5_300737349707381.png" /></td><td>300.7373 - 497.0738</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_2500_5_497073866218072.png" /></td><td>497.0738 - 662.1807</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_2500_5_662180781144663.png" /></td><td>662.1807 - 811.4466</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_2500_5_811446695419374.png" /></td><td>811.4466 - 954.1937</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_2500_5_9541937110683255.png" /></td><td>954.1937 - 1106.8325</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_2500_5_11068325127694576.png" /></td><td>1106.8325 - 1276.9457</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_2500_5_12769457147227717.png" /></td><td>1276.9457 - 1472.2771</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_2500_5_14722771172400248.png" /></td><td>1472.2771 - 1724.0024</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_2500_5_17240024218865219.png" /></td><td>1724.0024 - 2188.6521</td></tr></table>', layer: layer_spacesyntaxgraph_clver_segment_map_2500_5},
+            {label: 'spacesyntax — graph_clver_segment_map_500<br /><table><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_500_4_100002980280.png" /></td><td>-1.0000 - 29.8028</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_500_4_2980284834301.png" /></td><td>29.8028 - 48.3430</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_500_4_4834306588922.png" /></td><td>48.3430 - 65.8892</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_500_4_6588928385123.png" /></td><td>65.8892 - 83.8512</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_500_4_83851210271374.png" /></td><td>83.8512 - 102.7137</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_500_4_102713712332075.png" /></td><td>102.7137 - 123.3207</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_500_4_123320714676736.png" /></td><td>123.3207 - 146.7673</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_500_4_146767317532427.png" /></td><td>146.7673 - 175.3242</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_500_4_175324222141468.png" /></td><td>175.3242 - 221.4146</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_500_4_221414637500009.png" /></td><td>221.4146 - 375.0000</td></tr></table>', layer: layer_spacesyntaxgraph_clver_segment_map_500_4},]},
+        {label: '<b>Choice</b>', selectAllCheckbox: true, children: [
+            {label: 'spacesyntax — graph_clver_segment_map choice 2500<br /><table><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice2500_3_000004076000000.png" /></td><td>0.0000 - 40760.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice2500_3_40760000012711400001.png" /></td><td>40760.0000 - 127114.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice2500_3_127114000025341800002.png" /></td><td>127114.0000 - 253418.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice2500_3_253418000042148100003.png" /></td><td>253418.0000 - 421481.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice2500_3_421481000061034300004.png" /></td><td>421481.0000 - 610343.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice2500_3_610343000082477500005.png" /></td><td>610343.0000 - 824775.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice2500_3_8247750000108343500006.png" /></td><td>824775.0000 - 1083435.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice2500_3_10834350000141193200007.png" /></td><td>1083435.0000 - 1411932.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice2500_3_14119320000181734400008.png" /></td><td>1411932.0000 - 1817344.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice2500_3_18173440000238876400009.png" /></td><td>1817344.0000 - 2388764.0000</td></tr></table>', layer: layer_spacesyntaxgraph_clver_segment_mapchoice2500_3},
+            {label: 'spacesyntax — graph_clver_segment_map_choice_500<br /><table><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_choice_500_2_0000042400000.png" /></td><td>0.0000 - 424.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_choice_500_2_4240000115800001.png" /></td><td>424.0000 - 1158.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_choice_500_2_11580000207500002.png" /></td><td>1158.0000 - 2075.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_choice_500_2_20750000315900003.png" /></td><td>2075.0000 - 3159.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_choice_500_2_31590000445800004.png" /></td><td>3159.0000 - 4458.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_choice_500_2_44580000610800005.png" /></td><td>4458.0000 - 6108.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_choice_500_2_61080000809300006.png" /></td><td>6108.0000 - 8093.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_choice_500_2_809300001065900007.png" /></td><td>8093.0000 - 10659.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_choice_500_2_1065900001515100008.png" /></td><td>10659.0000 - 15151.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_map_choice_500_2_1515100002299700009.png" /></td><td>15151.0000 - 22997.0000</td></tr></table>', layer: layer_spacesyntaxgraph_clver_segment_map_choice_500_2},
+            {label: 'spacesyntax — graph_clver_segment_map choice 800<br /><table><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice800_1_00000153500000.png" /></td><td>0.0000 - 1535.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice800_1_15350000430300001.png" /></td><td>1535.0000 - 4303.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice800_1_43030000788200002.png" /></td><td>4303.0000 - 7882.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice800_1_788200001230100003.png" /></td><td>7882.0000 - 12301.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice800_1_1230100001760100004.png" /></td><td>12301.0000 - 17601.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice800_1_1760100002407300005.png" /></td><td>17601.0000 - 24073.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice800_1_2407300003190300006.png" /></td><td>24073.0000 - 31903.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice800_1_3190300004164700007.png" /></td><td>31903.0000 - 41647.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice800_1_4164700005539700008.png" /></td><td>41647.0000 - 55397.0000</td></tr><tr><td style="text-align: center;"><img src="legend/spacesyntaxgraph_clver_segment_mapchoice800_1_5539700007862000009.png" /></td><td>55397.0000 - 78620.0000</td></tr></table>', layer: layer_spacesyntaxgraph_clver_segment_mapchoice800_1},
+            {label: "Carto Dark", layer: layer_CartoDark_0},]},]
+        var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
+            collapsed: true,
+        });
+        lay.addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
